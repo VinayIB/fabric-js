@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="js/fabricjs_viewport.js"></script>
+    <style type="text/css">
+    * {padding:0px; margin:0px;position: relative;}
+    </style>
+</head>
+<body>
+    
+
+<script type="text/javascript">
+var app = {};
+app.viewport = null;
+app.id = 'viewport';
+app.fillWorkspace = function(){
+    $('body').html('<canvas>').attr('id', app.id);
+    $("#" + app.id).attr('height', $(document).height());
+    $("#" + app.id).attr('width', $(document).width());
+    app.viewport = new fabric.CanvasWithViewport(app.id, {isDrawingMode: true});
+    app.viewport.setHeight($(document).height());
+    app.viewport.setWidth($(document).width());
+    console.log($(document).height());
+};
+$(document).ready(function($) {
+    app.fillWorkspace();
+    $(window).on('resize', app.fillWorkspace);
+    
+});
+</script>
+
+</body>
+</html>

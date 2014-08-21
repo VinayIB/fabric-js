@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js"></script>
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="toolbar">
+            <div class="buttons">
+                <a href="#" class="active btn btn-primary edit {{moveClass}}"><i class="fa fa-edit"></i> Edit mode</a>
+                <a href="#" class="btn btn-primary pencil {{drawClass}}"><i class="fa fa-pencil"></i> Draw mode</a>
+                <a href="#" class="btn btn-primary grab {{moveClass}}"><i class="fa fa-arrows"></i> Grab mode</a>
+                <a href="#" class="btn btn-primary zoom-in"><i class="fa  fa-search-plus"></i> Zoom in</a>
+                <a href="#" class="btn btn-primary zoom-out"><i class="fa  fa-search-minus"></i> Zoom out</a>
+                <a href="#" class="btn btn-primary btn-danger eraser"><i class="fa fa-eraser"></i> Clear</a>
+                <a href="#" class="btn btn-primary btn-danger add"><i class="fa fa-add"></i> Add</a>
+            </div>
+</div>
+<div class="toolbar-textbox">
+    <div class="buttons">
+        <ul class="list-inline">
+            <li>
+                <input class="form-control" id="width-obj" type="text" placeholder="width" size=10></input>    
+            </li>
+            <li>
+                <input class="form-control" id="height-obj" type="text" placeholder="width" size=10></input>
+            </li>
+            <li>
+                <a href="#" class="btn btn-primary btn-success apply"></i>Apply</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<canvas id="viewport"></canvas>
+
+<script type="text/javascript">
+(function(){
+    window.app = {};
+    app.v = new fabric.Canvas('viewport');
+    app.b = new fabric.Rect({ 
+        fill: 'red', 
+        width: 600,
+        height: 600,
+        hasControls: false, 
+    });
+    app.blackBoardDimension = { width: 300, height: 300 };
+    app.v.on('after:render', function() {
+              return this.calcOffset();
+    });
+
+    app.renderViewport = function(afterHook, beforeHook) {
+        if (beforeHook) beforeHook.call(app);
+        app.v.renderAll();
+        if (afterHook) afterHook.call(app);
+    };
+    app.resizeViewport = function(){
+        if (app.v)
+        {
+            x = $(window);
+            app.v.setDimensions({ width: x.width(), height: x.height() });
+        }
+        return app;
+    };
+    app.initBlackBoard = function(){
+        if (app.b)
+        {
+            app.v.add(app.b);
+            app.b.center();
+            app.b.set(app.blackBoardDimension);
+
+            app.b.bringForward();
+            app.renderViewport();
+        }
+    };
+    $(document).ready(function() {
+        app.resizeViewport().initBlackBoard();
+        $(window).on('resize', function(){
+            window.app.resizeViewport().renderViewport();
+        });
+    });
+
+})(window);
+</script>
+<script src="js/fabricjs_viewport.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

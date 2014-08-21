@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>c with viewport example</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js"></script>
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body>
+        <div class="toolbar">
+            <div class="buttons">
+                <a href="#" class="active btn btn-primary edit {{moveClass}}"><i class="fa fa-edit"></i> Edit mode</a>
+                <a href="#" class="btn btn-primary pencil {{drawClass}}"><i class="fa fa-pencil"></i> Draw mode</a>
+                <a href="#" class="btn btn-primary grab {{moveClass}}"><i class="fa fa-arrows"></i> Grab mode</a>
+                <a href="#" class="btn btn-primary zoom-in"><i class="fa  fa-search-plus"></i> Zoom in</a>
+                <a href="#" class="btn btn-primary zoom-out"><i class="fa  fa-search-minus"></i> Zoom out</a>
+                <a href="#" class="btn btn-primary btn-danger eraser"><i class="fa fa-eraser"></i> Clear</a>
+                <a href="#" class="btn btn-primary btn-danger add"><i class="fa fa-add"></i> Add</a>
+            </div>
+        </div>
+        <div class="toolbar-textbox">
+            <div class="buttons">
+                <ul class="list-inline">
+                    <li>
+                        <input class="form-control" id="width-obj" type="text" placeholder="width" size=10></input>    
+                    </li>
+                    <li>
+                        <input class="form-control" id="height-obj" type="text" placeholder="width" size=10></input>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-primary btn-success apply"></i>Apply</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="workspace-outer">
+            <div class="workspace-inner">
+                <canvas id="zoomable_canvas" width="600px" height="600px"></canvas>            
+            </div>
+        </div>
+
+        <div>
+            <a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="glyphicon glyphicon-align-justify"></i></a>
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="glyphicon glyphicon-remove"></i></a>
+                    <li class="sidebar-brand">
+                        <a href="#">Administrator</a>
+                    </li>
+                    <li>
+                        <a href="#">Templates</a>
+                    </li>
+                    <li>
+                        <a href="#">Fonts</a>
+                    </li>
+                    <li>
+                        <a href="#">Shapes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script src="js/fabricjs_viewport.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
