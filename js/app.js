@@ -15,26 +15,35 @@ $(".buttons .pencil").click(function() {
   $(".buttons a").not(this).removeClass("active");
   app.v.isDrawingMode = true;
   app.v.isGrabMode = false;
+  app.b.selectable = true;
+
   return false;
 });
 
 $(".buttons .grab").click(function() {
-  zoomIn();
 
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
   app.v.isDrawingMode = false;
   app.v.isGrabMode = true;
+  app.b.isGrabMode = false;
+  app.b.selectable = false;
+  app.v.renderAll();
   return false;
 });
 
+$(document).on("mousedown" ,  function(){
+  if(app.b.selectable === false){
+    console.log("draggable box not");
+  }
+});
 // $(".buttons .zoom-in").click(function() {
 //   app.v.setZoom(app.v.viewport.zoom * 1.1);
 //   return false;
 // });
 
 $(".buttons .orientation").click(function() {
-  app.b.set('angle' , 90);
+  app.b.set('angle' , 180);
   // app.b.center();
   app.v.renderAll();
   return false;
