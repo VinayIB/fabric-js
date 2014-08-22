@@ -14,13 +14,15 @@
 <body>
 <div class="toolbar">
             <div class="buttons">
+                <div class="zoom-size">100%</div>
                 <a href="#" class="active btn btn-primary edit {{moveClass}}"><i class="fa fa-edit"></i> Edit mode</a>
                 <a href="#" class="btn btn-primary pencil {{drawClass}}"><i class="fa fa-pencil"></i> Draw mode</a>
                 <a href="#" class="btn btn-primary grab {{moveClass}}"><i class="fa fa-arrows"></i> Grab mode</a>
-                <a href="#" class="btn btn-primary zoom-in"><i class="fa  fa-search-plus"></i> Zoom in</a>
-                <a href="#" class="btn btn-primary zoom-out"><i class="fa  fa-search-minus"></i> Zoom out</a>
-                <a href="#" class="btn btn-primary btn-danger eraser"><i class="fa fa-eraser"></i> Clear</a>
-                <a href="#" class="btn btn-primary btn-danger add"><i class="fa fa-add"></i> Add</a>
+<!--                 <a href="#" class="btn btn-primary zoom-in"><i class="fa  fa-search-plus"></i> Zoom in</a>
+                <a href="#" class="btn btn-primary zoom-out"><i class="fa  fa-search-minus"></i> Zoom out</a> -->
+                <a href="#" class="btn btn-primary btn-danger eraser"><i class="fa fa-eraser"></i> Clear All</a>
+                <a href="#" class="btn btn-primary btn-danger eraser-specific"><i class="fa"></i> Clear Zoom</a>
+                <a href="#" class="btn btn-primary btn-danger orientation"><i class="fa fa-add"></i> Orientation</a>
             </div>
 </div>
 <div class="toolbar-textbox">
@@ -42,17 +44,20 @@
 
 <script type="text/javascript">
 (function(){
+
+
     window.app = {};
     app.v = new fabric.Canvas('viewport');
+    app.blackBoardDimension = { width: 300, height: 300 };
     app.b = new fabric.Rect({ 
         fill: 'red', 
         width: 600,
         height: 600,
         hasControls: false, 
+        name: "blackboard",
     });
-    app.blackBoardDimension = { width: 300, height: 300 };
     app.v.on('after:render', function() {
-              return this.calcOffset();
+        return this.calcOffset();
     });
 
     app.renderViewport = function(afterHook, beforeHook) {
@@ -79,6 +84,41 @@
             app.renderViewport();
         }
     };
+    app.clearAllObjects = function(){
+        app.v.forEachObject(function(o){ if(o.name !== "blackboard") app.v.remove(o); });
+        return app;
+    }
+    app.clearSelectedObj = function(){
+        app.v.getActiveObject(function(o){ app.v.remove(o); });
+        return app;
+    }
+
+    app.v.on('object:moving', function(e) {
+        object = e.target;
+        if(object.name === "blackboard"){
+            console.log(object.get('left')+", "+app.v.width);   
+            if(object.get('top') < 0){
+                app.b.set('top',0);
+            }
+            if(object.get('left') < 0){
+                app.b.set('left',0);
+            }
+            if(app.v.width - app.b.width < object.get('left')){
+                app.b.set('left', app.v.width - app.b.width);
+            }
+            if(app.v.height - app.b.height < object.get('top')){
+                app.b.set('top', app.v.height - app.b.height);
+            }
+
+        }
+        else{
+            console.log("not blackboard");
+        }
+
+        app.renderViewport();
+
+
+    });
     $(document).ready(function() {
         app.resizeViewport().initBlackBoard();
         $(window).on('resize', function(){
