@@ -5,7 +5,7 @@
 $(".buttons .edit").click(function() {
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
-  app.v.isDrawingMode = false;
+  app.v.isDrawingMode = true;
   app.v.isGrabMode = false;
   return false;
 });
@@ -13,7 +13,8 @@ $(".buttons .edit").click(function() {
 $(".buttons .pencil").click(function() {
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
-  app.v.isDrawingMode = true;
+  
+   
   app.v.isGrabMode = false;
   app.b.selectable = true;
 
@@ -25,17 +26,11 @@ $(".buttons .grab").click(function() {
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
   app.v.isDrawingMode = false;
-  app.v.isGrabMode = true;
-  app.b.isGrabMode = false;
-  app.b.selectable = false;
+  // app.v.isGrabMode = true;
+  // app.b.isGrabMode = false;
+  // app.b.selectable = false;
   app.v.renderAll();
   return false;
-});
-
-$(document).on("mousedown" ,  function(){
-  if(app.b.selectable === false){
-    console.log("draggable box not");
-  }
 });
 // $(".buttons .zoom-in").click(function() {
 //   app.v.setZoom(app.v.viewport.zoom * 1.1);
