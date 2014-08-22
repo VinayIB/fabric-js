@@ -5,7 +5,8 @@
 $(".buttons .edit").click(function() {
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
-  app.v.isDrawingMode = true;
+  app.b.selectable = true;
+  
   app.v.isGrabMode = false;
   return false;
 });
@@ -14,9 +15,8 @@ $(".buttons .pencil").click(function() {
   $(this).addClass("active");
   $(".buttons a").not(this).removeClass("active");
   
-   
+   app.v.isDrawingMode = true;
   app.v.isGrabMode = false;
-  app.b.selectable = true;
 
   return false;
 });
